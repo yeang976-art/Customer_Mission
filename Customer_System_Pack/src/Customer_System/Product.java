@@ -11,4 +11,8 @@ public class Product {
         this.description = d;
         this.s_amount = a;
     }
+
+    public String getInfo() {
+        return p_name + "---" + String.format("%,d",price) + "원---" + description + "---" + s_amount + "개";
+    }
 }
