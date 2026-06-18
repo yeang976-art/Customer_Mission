@@ -20,14 +20,13 @@ public class Category {
                 """);
     }
 
-    public List<Product> setProducts(int id) {
+    public void setProducts(int id) {
         products = switch (id) {
             case 1 -> new SmartDevices().createProducts();
             case 2 -> new Clothes().createProducts();
             case 3 -> new Foods().createProducts();
             default -> throw new IllegalArgumentException("잘못된 카테고리 번호입니다.");
         };
-        return products;
     }
 
     public void getProducts() {
