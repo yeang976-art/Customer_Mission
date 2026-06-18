@@ -1,8 +1,10 @@
 package customer_system;
 
 public class Main {
-    static void main() {
+    static void main() throws InterruptedException {
         CommerceSystem cs = new CommerceSystem();
-        cs.start();
+        while (cs.getRunState()) {
+            cs.start();
+        }
     }
 }

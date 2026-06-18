@@ -6,7 +6,6 @@ public class Foods implements IProuducts{
 
     public Foods() {
         System.out.println("\t\t\t< 식품 >");
-        createProducts();
     }
 
     @Override

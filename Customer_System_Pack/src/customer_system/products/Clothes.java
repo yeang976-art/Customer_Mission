@@ -6,7 +6,6 @@ public class Clothes implements IProuducts {
 
     public Clothes() {
         System.out.println("\t\t\t< 의류 >");
-        createProducts();
     }
 
     @Override

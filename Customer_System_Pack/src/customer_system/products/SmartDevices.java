@@ -6,7 +6,6 @@ public class SmartDevices implements IProuducts {
 
     public SmartDevices() {
         System.out.println("\t\t\t< 전자제품 >");
-        createProducts();
     }
 
     @Override
