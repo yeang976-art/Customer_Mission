@@ -1,9 +1,9 @@
-package Customer_System;
+package customer_system.products;
 
 public class Product {
-    private String p_name, description;
-    private int s_amount;
-    private long price;
+    private final String p_name, description;
+    private final int s_amount;
+    private final long price;
 
     public Product (String name, long p, String d, int a) {
         this.p_name = name;
@@ -12,7 +12,7 @@ public class Product {
         this.s_amount = a;
     }
 
-    public String getInfo() {
+    public String getRecord() {
         return p_name + "---" + String.format("%,d",price) + "원---" + description + "---" + s_amount + "개";
     }
 }
