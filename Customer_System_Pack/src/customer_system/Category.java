@@ -37,23 +37,24 @@ public class Category {
 
     public void selectedProduct(int id) throws InterruptedException {
         if (id == 0) {
+            System.out.println("[INFO 410] 이전 메뉴로 돌아갑니다.");
             Thread.sleep(200);
             getCategories();
         }
         else {
-            System.out.println("선택한 상품: " + switch (id) {
-                case 1 -> products.getFirst().getRecord();
-                case 2 -> products.get(1).getRecord();
-                case 3 -> products.get(2).getRecord();
-                case 4 -> products.get(3).getRecord();
-                default -> throw new IllegalArgumentException();
-            } + "\n\n");
-            Thread.sleep(1500);
-            getCategories();
+            try {
+                System.out.println("선택한 상품: " + products.get(id - 1).getRecord() + "\n\n");
+                Thread.sleep(1500);
+                getCategories();
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println("[ERROR 405] 존재하지 않는 상품 번호입니다.");
+                Thread.sleep(500);
+                getCategories();
+            }
         }
     }
 
-    public void getProducts() {
+    public void getProducts() throws NullPointerException {
         System.out.println("상품명----가격(원)----설명----재고(개)");
         for (Product auto : products)
             System.out.println("[" + (products.indexOf(auto) + 1) + "] " + auto.getRecord());
