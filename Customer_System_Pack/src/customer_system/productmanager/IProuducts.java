@@ -1,4 +1,4 @@
-package customer_system.products;
+package customer_system.productmanager;
 
 import java.util.*;
 

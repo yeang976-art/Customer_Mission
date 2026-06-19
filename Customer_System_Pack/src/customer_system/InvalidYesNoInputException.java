@@ -1,4 +1,4 @@
-package customer_system.products;
+package customer_system;
 
 public class InvalidYesNoInputException extends RuntimeException {
     public InvalidYesNoInputException(String message) {

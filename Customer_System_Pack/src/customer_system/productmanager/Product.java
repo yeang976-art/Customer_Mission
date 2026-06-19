@@ -1,4 +1,4 @@
-package customer_system.products;
+package customer_system.productmanager;
 
 public class Product {
     private final String p_name, description;

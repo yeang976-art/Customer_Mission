@@ -1,5 +1,7 @@
 package customer_system.products;
 
+import customer_system.productmanager.*;
+
 import java.util.*;
 
 public class SmartDevices implements IProuducts {

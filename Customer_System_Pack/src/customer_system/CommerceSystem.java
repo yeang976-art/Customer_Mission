@@ -1,6 +1,6 @@
 package customer_system;
 
-import customer_system.products.*;
+import customer_system.productmanager.Category;
 
 import java.util.*;
 

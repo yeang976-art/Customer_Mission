@@ -1,4 +1,7 @@
-package customer_system.products;
+package customer_system.productmanager;
+
+import customer_system.InvalidYesNoInputException;
+import customer_system.products.*;
 
 import java.util.*;
 
