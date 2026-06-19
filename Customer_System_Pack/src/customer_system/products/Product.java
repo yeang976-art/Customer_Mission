@@ -15,4 +15,8 @@ public class Product {
     public String getRecord() {
         return p_name + "----" + String.format("%,d",price) + "원----" + description + "----" + s_amount + "개";
     }
+
+    public Cart addNewProductInfo() {
+        return new Cart(p_name, s_amount, price);
+    }
 }

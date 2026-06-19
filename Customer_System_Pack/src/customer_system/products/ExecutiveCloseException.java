@@ -1,4 +1,4 @@
-package customer_system;
+package customer_system.products;
 
 public class ExecutiveCloseException extends RuntimeException {
     public ExecutiveCloseException(String message) {

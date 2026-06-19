@@ -1,5 +1,7 @@
 package customer_system;
 
+import customer_system.products.*;
+
 import java.util.*;
 
 public class CommerceSystem {

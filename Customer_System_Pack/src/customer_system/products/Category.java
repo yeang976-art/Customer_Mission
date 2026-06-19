@@ -1,13 +1,14 @@
-package customer_system;
+package customer_system.products;
 
-import customer_system.products.*;
 import java.util.*;
 
 public class Category {
     private List<Product> products;
+    private final List<Cart> cart;
 
     public Category() {
         getCategories();
+        cart = new ArrayList<>();
     }
 
     public void getCategories() {
@@ -35,6 +36,23 @@ public class Category {
         }
     }
 
+    public void getProducts() {
+        System.out.println("""
+                                         [상품목록]
+                           [번호] 상품명----가격(원)----설명----재고(개)""");
+        for (Product auto : products)
+            System.out.println("[" + (products.indexOf(auto) + 1) + "] " + auto.getRecord());
+        System.out.println("[0] 뒤로가기");
+    }
+
+    public void getCartInfo() {
+        System.out.println("""
+                                    [장바구니]
+                           상품명----가격(원)----재고(개)""");
+        for (Cart auto : cart)
+            System.out.println(auto.getCartRecord());
+    }
+
     public void selectedProduct(int id) throws InterruptedException {
         if (id == 0) {
             System.out.println("[INFO 410] 이전 메뉴로 돌아갑니다.");
@@ -44,20 +62,14 @@ public class Category {
         else {
             try {
                 System.out.println("선택한 상품: " + products.get(id - 1).getRecord() + "\n\n");
-                Thread.sleep(1500);
-                getCategories();
+                Thread.sleep(200);
+                cart.add(products.get(id - 1).addNewProductInfo());
+                getCartInfo();
             } catch (IndexOutOfBoundsException e) {
                 System.err.println("[ERROR 405] 존재하지 않는 상품 번호입니다.");
                 Thread.sleep(500);
                 getCategories();
             }
         }
-    }
-
-    public void getProducts() throws NullPointerException {
-        System.out.println("상품명----가격(원)----설명----재고(개)");
-        for (Product auto : products)
-            System.out.println("[" + (products.indexOf(auto) + 1) + "] " + auto.getRecord());
-        System.out.println("[0] 뒤로가기");
     }
 }
