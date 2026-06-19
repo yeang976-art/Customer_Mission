@@ -12,6 +12,6 @@ public class Cart {
     }
 
     public String getCartRecord() {
-        return sl_product + "----" + String.format("%,d",sl_price) + "원----" + amount + "개";
+        return sl_product + "----" + String.format("%,d", sl_price) + "원----" + amount + "개";
     }
 }

@@ -2,7 +2,7 @@ package customer_system.products;
 
 import java.util.*;
 
-public class Foods implements IProuducts{
+public class Foods implements IProuducts {
 
     public Foods() {
         System.out.println("\t\t\t< 식품 >");
