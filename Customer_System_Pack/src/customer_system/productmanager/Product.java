@@ -1,6 +1,6 @@
 package customer_system.productmanager;
 
-import customer_system.productmanager.custom_exceptions.*;
+import customer_system.custom_exceptions.*;
 
 public class Product {
     private final String p_name, description;

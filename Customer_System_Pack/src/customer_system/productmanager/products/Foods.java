@@ -3,7 +3,7 @@ package customer_system.productmanager.products;
 import customer_system.productmanager.*;
 import java.util.*;
 
-public class Foods implements IProuducts {
+public class Foods implements IProducts {
 
     private static final List<Product> PRODUCTS = new ArrayList<>(List.of(
             new Product("제주 감귤 세트", 29000L, "산지 직송 달콤한 제철 감귤", 60),

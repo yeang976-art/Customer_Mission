@@ -1,4 +1,4 @@
-package customer_system;
+package customer_system.customermanager;
 
 public enum Grade {
     SIENNA, COBALT, DANDELION, CYAN, SCARLET, CORAL, ARGENTO, ELDORA, CRIMSON, IMPERIAL;

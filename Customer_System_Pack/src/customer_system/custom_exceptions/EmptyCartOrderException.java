@@ -1,4 +1,4 @@
-package customer_system.productmanager.custom_exceptions;
+package customer_system.custom_exceptions;
 
 public class EmptyCartOrderException extends RuntimeException {
     public EmptyCartOrderException() {

@@ -1,7 +1,9 @@
-package customer_system.productmanager;
+package customer_system.managment;
 
-import customer_system.*;
-import customer_system.productmanager.custom_exceptions.*;
+import customer_system.ConsoleColor;
+import customer_system.customermanager.Customer;
+import customer_system.productmanager.*;
+import customer_system.custom_exceptions.*;
 import customer_system.productmanager.products.*;
 import java.util.*;
 

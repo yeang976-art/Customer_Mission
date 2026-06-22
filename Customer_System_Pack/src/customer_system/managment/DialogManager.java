@@ -1,4 +1,6 @@
-package customer_system;
+package customer_system.managment;
+
+import customer_system.ConsoleColor;
 
 public class DialogManager {
     private static final DialogManager dialog = new DialogManager();

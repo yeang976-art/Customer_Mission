@@ -1,10 +1,9 @@
 package customer_system.productmanager.products;
 
 import customer_system.productmanager.*;
-
 import java.util.*;
 
-public class Clothes implements IProuducts {
+public class Clothes implements IProducts {
 
     private static final List<Product> PRODUCTS = new ArrayList<>(List.of(
             new Product("오버핏 후드티", 59000L, "데일리로 입기 좋은 캐주얼 후드티", 50),

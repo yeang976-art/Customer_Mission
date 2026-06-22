@@ -3,7 +3,7 @@ package customer_system.productmanager.products;
 import customer_system.productmanager.*;
 import java.util.*;
 
-public class SmartDevices implements IProuducts {
+public class SmartDevices implements IProducts {
 
     private static final List<Product> PRODUCTS = new ArrayList<>(List.of(
             new Product("Galaxy S25", 1200000L, "최신 안드로이드 스마트폰", 25),

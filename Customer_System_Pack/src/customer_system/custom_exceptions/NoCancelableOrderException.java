@@ -1,4 +1,4 @@
-package customer_system.productmanager.custom_exceptions;
+package customer_system.custom_exceptions;
 
 public class NoCancelableOrderException extends RuntimeException {
     public NoCancelableOrderException() {

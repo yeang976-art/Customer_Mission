@@ -1,7 +1,8 @@
 package customer_system;
 
-import customer_system.productmanager.*;
-import customer_system.productmanager.custom_exceptions.*;
+import customer_system.customermanager.*;
+import customer_system.managment.*;
+import customer_system.custom_exceptions.*;
 import java.util.*;
 
 public class CommerceSystem {

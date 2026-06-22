@@ -1,4 +1,6 @@
-package customer_system;
+package customer_system.customermanager;
+
+import customer_system.ConsoleColor;
 
 public class Customer {
     private final String c_name, c_email;
