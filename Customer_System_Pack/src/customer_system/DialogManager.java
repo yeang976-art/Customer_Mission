@@ -1,7 +1,5 @@
 package customer_system;
 
-import java.util.InputMismatchException;
-
 public class DialogManager {
     private static final DialogManager dialog = new DialogManager();
 
@@ -14,8 +12,7 @@ public class DialogManager {
         if (a == 91) return ConsoleColor.CYAN + "\t\t## 주문 확인 ##" + ConsoleColor.RESET;
         else if (a == 92) return ConsoleColor.YELLOW + "\t\t## 주문 취소 ##" + ConsoleColor.RESET;
         else if (a > 0 && a < 4) return ConsoleColor.BLUE + "\t\t## 상품 목록 ##" + ConsoleColor.RESET;
-        else if (a >= 4 && a < 91) throw new IllegalArgumentException();
-        else throw new InputMismatchException();
+        else throw new IllegalArgumentException();
     }
 
     public void gradeList() {

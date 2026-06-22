@@ -6,7 +6,6 @@ import java.util.*;
 
 public class CommerceSystem {
     private final Scanner sc;
-    private final ListManager listManager;
     private Customer customer;
     private Grade grade;
     private boolean isRunning;
@@ -16,7 +15,6 @@ public class CommerceSystem {
     public CommerceSystem() {
         sc = new Scanner(System.in);
         isRunning = true;
-        listManager = new ListManager();
     }
 
     // 고객 등록
@@ -28,7 +26,7 @@ public class CommerceSystem {
         String email = sc.nextLine();
 
         boolean isVerified = false;
-        DialogManager.getDialog().gradeList(); // 회원등급표
+        DialogManager.getDialog().gradeList(); // 회원등급
         while (!isVerified) {
             try {
                 int g = sc.nextInt();
@@ -51,6 +49,7 @@ public class CommerceSystem {
         }
         customer = new Customer(name, email, grade);
         customer.getInfo();
+        ListManager.getInstance().setCustomer(customer);
     }
 
     // 상호작용 절차
@@ -89,7 +88,7 @@ public class CommerceSystem {
                 } else {
                     System.out.println(DialogManager.getDialog().title(a));
                     Thread.sleep(300);
-                    listManager.setState(a);
+                    ListManager.getInstance().setState(a);
                 }
                 isVerified = true;
 
@@ -107,11 +106,11 @@ public class CommerceSystem {
     // 해당 카테고리의 상품 목록 창으로 이동
     private void productListState() throws InterruptedException {
         boolean isVerified = false;
-        listManager.getProducts();
+        ListManager.getInstance().getProducts();
         while (!isVerified) {
             try {
                 int b = sc.nextInt();
-                listManager.selectedProduct(b);
+                ListManager.getInstance().selectedProduct(b);
                 Thread.sleep(500);
                 isVerified = true;
                 if (b != 0) canAddCart = true; // 상품 선택 완료시
@@ -130,8 +129,8 @@ public class CommerceSystem {
         while (!isVerified) {
             try {
                 int p = sc.nextInt();
-                if (a == 91) listManager.setOrder(p);
-                else listManager.clearCart(p);
+                if (a == 91) ListManager.getInstance().setOrder(p);
+                else ListManager.getInstance().clearCart(p);
                 Thread.sleep(600);
                 isVerified = true;
             } catch (InputMismatchException e) {
@@ -150,7 +149,7 @@ public class CommerceSystem {
         while (!isVerified) {
             try {
                 int p = sc.nextInt();
-                listManager.setCart(p); // 장바구니 업데이트
+                ListManager.getInstance().setCart(p); // 장바구니 업데이트
                 isVerified = true;
             } catch (InputMismatchException e) {
                 System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");

@@ -10,6 +10,10 @@ public class Customer {
         this.c_grade = c_grade;
     }
 
+    public Grade getGrade() {
+        return c_grade;
+    }
+
     public void getInfo() {
         System.out.print(ConsoleColor.PURPLE);
         System.out.printf("""

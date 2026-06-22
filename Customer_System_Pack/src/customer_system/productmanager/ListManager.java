@@ -6,11 +6,22 @@ import customer_system.productmanager.products.*;
 import java.util.*;
 
 public class ListManager {
+    private static final ListManager instance = new ListManager();
+
     private List<Product> products;
     private final List<Cart> cart, debugCart;
     private int index;
+    private Customer customer;
 
-    public ListManager() {
+    public static ListManager getInstance() {
+        return instance;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    private ListManager() {
         cart = new ArrayList<>();
         debugCart = new ArrayList<>();
     }
@@ -75,10 +86,17 @@ public class ListManager {
             sumPrice += auto.getPrice();
             System.out.println(auto.getCartRecord());
         }
+        double discountRate = customer == null ? 0.0 : customer.getGrade().discount();
+        long finalPrice = Math.round(sumPrice * (1 - discountRate));
+
         System.out.printf("""
                         [총 주문금액]
                 %,d원
-                """,sumPrice);
+                        [회원등급 할인율]
+                %.1f%%
+                        [최종 결제금액]
+                %,d원
+                """, sumPrice, discountRate * 100, finalPrice);
     }
 
     // 상품 선택
