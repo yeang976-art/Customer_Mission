@@ -1,40 +1,22 @@
 package customer_system.productmanager;
 
-import customer_system.ConsoleColor;
+import customer_system.*;
 import customer_system.productmanager.custom_exceptions.*;
 import customer_system.productmanager.products.*;
 import java.util.*;
 
-public class Category {
+public class ListManager {
     private List<Product> products;
     private final List<Cart> cart, debugCart;
     private int index;
 
-    public Category() {
+    public ListManager() {
         cart = new ArrayList<>();
         debugCart = new ArrayList<>();
     }
 
-    // 메인화면
-    public void getCategories() {
-        System.out.println("""
-                목록을 선택하시오.
-                (예: "3" 입력시 식품 카테고리로 이동)
-                
-                [ 실시간 커머스 플랫폼 메인 ]
-                [1] 전자제품
-                [2] 의류
-                [3] 식품
-                [0] 종료      | 프로그램 종료
-                
-                [ 주문 관리 ]
-                [91] 장바구니 확인    | 장바구니를 확인 후 주문합니다.
-                [92] 주문 취소       | 진행중인 주문을 취소합니다.
-                """);
-    }
-
     // 상품목록 설정 및 주문관리 및 종료
-    public void setProducts(int id) {
+    public void setState(int id) {
         switch (id) {
             case 0 -> System.out.println("[INFO 200] 프로그램을 정상 종료합니다.");
             case 1 -> products = new SmartDevices().loadProducts();
@@ -44,16 +26,12 @@ public class Category {
                 if (cart.isEmpty()) throw new EmptyCartOrderException();
                 else {
                     getCartInfo();
-                    System.out.println("""
-                        위와 같이 주문 하시겠습니까?
-                        1.주문확정            2.메인으로""");
+                    DialogManager.getDialog().sureOrderPopup();
                 }
             }
             case 92 -> {
                 if (debugCart.isEmpty()) throw new NoCancelableOrderException();
-                else System.out.println("""
-                        주문을 취소하시겠습니까?
-                        1.주문취소            2.메인으로""");
+                else DialogManager.getDialog().cancelOrderPopup();
             }
             default -> throw new IllegalArgumentException();
         }
@@ -99,7 +77,7 @@ public class Category {
         }
         System.out.printf("""
                         [총 주문금액]
-                %,d
+                %,d원
                 """,sumPrice);
     }
 

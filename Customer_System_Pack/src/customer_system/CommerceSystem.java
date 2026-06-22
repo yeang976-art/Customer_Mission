@@ -1,14 +1,14 @@
 package customer_system;
 
 import customer_system.productmanager.*;
-import customer_system.productmanager.custom_exceptions.EmptyCartOrderException;
-import customer_system.productmanager.custom_exceptions.NoCancelableOrderException;
-
+import customer_system.productmanager.custom_exceptions.*;
 import java.util.*;
 
 public class CommerceSystem {
     private final Scanner sc;
-    private final Category c;
+    private final ListManager listManager;
+    private Customer customer;
+    private Grade grade;
     private boolean isRunning;
     private boolean canAddCart = false;
     private int a;
@@ -16,14 +16,51 @@ public class CommerceSystem {
     public CommerceSystem() {
         sc = new Scanner(System.in);
         isRunning = true;
-        c = new Category();
+        listManager = new ListManager();
+    }
+
+    // 고객 등록
+    public void register() {
+        System.out.println(ConsoleColor.BLUE + "\t\t## 회원 등록 ##" + ConsoleColor.RESET);
+        System.out.println("회원 이름을 입력하시오");
+        String name = sc.nextLine();
+        System.out.println("회원 이메일을 입력하시오");
+        String email = sc.nextLine();
+
+        boolean isVerified = false;
+        DialogManager.getDialog().gradeList(); // 회원등급표
+        while (!isVerified) {
+            try {
+                int g = sc.nextInt();
+
+                if (g < 0 || g > Grade.values().length)
+                    throw new IllegalArgumentException();
+                else if (g == 0) {
+                    setRunState();
+                    return;
+                }
+
+                grade = Grade.values()[g - 1];
+                isVerified = true;
+            } catch (InputMismatchException e) {
+                System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
+                sc.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.err.println("[ERROR 404] 유효하지 않은 회원 등급입니다.");
+            }
+        }
+        customer = new Customer(name, email, grade);
+        customer.getInfo();
     }
 
     // 상호작용 절차
     public void start() throws InterruptedException {
+        Thread.sleep(1500); // 메인화면으로 로딩
         // 상품을 선택하지 않은 경우
         while (!canAddCart) {
-            c.getCategories();
+            customer.getInfo();
+            System.out.println(ConsoleColor.BLUE + "\t\t## 메인화면 ##" + ConsoleColor.RESET);
+            DialogManager.getDialog().mainDialog();
             mainState();
             if (!isRunning) {
                 sc.close();
@@ -50,9 +87,9 @@ public class CommerceSystem {
                     setRunState();
                     return;
                 } else {
-                    System.out.println(setTitle(a));
+                    System.out.println(DialogManager.getDialog().title(a));
                     Thread.sleep(300);
-                    c.setProducts(a);
+                    listManager.setState(a);
                 }
                 isVerified = true;
 
@@ -67,23 +104,14 @@ public class CommerceSystem {
         }
     }
 
-    // 창 이름
-    private String setTitle(int a) {
-        if (a == 91) return ConsoleColor.CYAN + "\t\t## 주문 확인 ##" + ConsoleColor.RESET;
-        else if (a == 92) return ConsoleColor.YELLOW + "\t\t## 주문 취소 ##" + ConsoleColor.RESET;
-        else if (a > 0 && a < 4) return ConsoleColor.BLUE + "\t\t## 상품 목록 ##" + ConsoleColor.RESET;
-        else if (a >= 4 && a < 91) throw new IllegalArgumentException();
-        else throw new InputMismatchException();
-    }
-
     // 해당 카테고리의 상품 목록 창으로 이동
     private void productListState() throws InterruptedException {
         boolean isVerified = false;
-        c.getProducts();
+        listManager.getProducts();
         while (!isVerified) {
             try {
                 int b = sc.nextInt();
-                c.selectedProduct(b);
+                listManager.selectedProduct(b);
                 Thread.sleep(500);
                 isVerified = true;
                 if (b != 0) canAddCart = true; // 상품 선택 완료시
@@ -102,9 +130,9 @@ public class CommerceSystem {
         while (!isVerified) {
             try {
                 int p = sc.nextInt();
-                if (a == 91) c.setOrder(p);
-                else c.clearCart(p);
-                Thread.sleep(1500);
+                if (a == 91) listManager.setOrder(p);
+                else listManager.clearCart(p);
+                Thread.sleep(600);
                 isVerified = true;
             } catch (InputMismatchException e) {
                 System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
@@ -118,14 +146,11 @@ public class CommerceSystem {
     // 장바구니 추가여부 창으로 이동
     private void addCartState() throws InterruptedException {
         boolean isVerified = false;
-        System.out.println("""
-                        선택한 상품을 장바구니에 추가하시겠습니까?
-                        1.추가            2.취소""");
+        DialogManager.getDialog().sureAddCartPopup();
         while (!isVerified) {
             try {
                 int p = sc.nextInt();
-                c.setCart(p); // 장바구니 업데이트
-                Thread.sleep(1500); // 메인화면으로 로딩
+                listManager.setCart(p); // 장바구니 업데이트
                 isVerified = true;
             } catch (InputMismatchException e) {
                 System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
@@ -139,6 +164,7 @@ public class CommerceSystem {
     // 프로그램 비활성화 플래그
     private void setRunState() {
         isRunning = false;
+        System.out.println(ConsoleColor.GREEN + "[INFO 200] 커머스 플랫폼을 정상 종료합니다." + ConsoleColor.RESET);
     }
 
     // 프로그램 활성여부
