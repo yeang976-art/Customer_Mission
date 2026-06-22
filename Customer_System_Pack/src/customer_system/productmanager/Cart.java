@@ -2,7 +2,7 @@ package customer_system.productmanager;
 
 public class Cart {
     private final String sl_product;
-    private int amount;
+    private final int amount;
     private final long sl_price;
 
     public Cart(String sl_product, int amount, long sl_price) {
