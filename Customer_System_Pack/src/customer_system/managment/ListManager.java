@@ -13,6 +13,7 @@ public class ListManager {
     private List<Product> products;
     private final List<Cart> cart, debugCart;
     private int index;
+    private long finalPrice;
     private Customer customer;
 
     public static ListManager getInstance() {
@@ -90,7 +91,7 @@ public class ListManager {
             System.out.println(auto.getCartRecord());
         }
         double discountRate = customer == null ? 0.0 : customer.getGrade().discount();
-        long finalPrice = Math.round(sumPrice * (1 - discountRate));
+        finalPrice = Math.round(sumPrice * (1 - discountRate));
 
         System.out.printf(ConsoleUI.color256(141) + """
                 
@@ -118,7 +119,9 @@ public class ListManager {
         switch (p) {
             case 1 -> {
                 try {
+                    if (customer.getMoney() < finalPrice) throw new InsufficientBalanceException();
                     System.out.println(ConsoleUI.color256(51) + "[INFO 201] 주문을 완료했습니다.\n" + ConsoleUI.RESET);
+                    customer.setMoney(customer.getMoney() - finalPrice);
                     for (Cart cartItem : cart) {
                         for (Product product : products) {
                             if (product.getName().equals(cartItem.getName())) {

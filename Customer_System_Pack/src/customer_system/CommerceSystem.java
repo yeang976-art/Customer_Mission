@@ -152,6 +152,8 @@ public class CommerceSystem {
                 isVerified = true;
             } catch (InputMismatchException e) {
                 handleInputMismatch();
+            } catch (InsufficientBalanceException ce) {
+                System.err.println(ce.getMessage());
             } catch (IllegalArgumentException e) {
                 System.err.println(ConsoleUI.color256(196) + "[ERROR 404] 유효하지 않은 항목입니다." + ConsoleUI.RESET);
             }

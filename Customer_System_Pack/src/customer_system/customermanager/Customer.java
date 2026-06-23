@@ -17,6 +17,10 @@ public class Customer {
         return c_grade;
     }
 
+    public long getMoney() {
+        return money;
+    }
+
     public void setMoney(long m) {
         this.money = m;
     }
@@ -24,6 +28,7 @@ public class Customer {
     public void getInfo() {
         System.out.print(ConsoleUI.color256(141));
         System.out.printf("""
+                           
                                 [회원정보]
                            회원이름: %s
                            회원이메일: %s
