@@ -1,5 +1,6 @@
 package customer_system.productmanager.products;
 
+import customer_system.ConsoleUI;
 import customer_system.productmanager.*;
 import java.util.*;
 
@@ -13,7 +14,7 @@ public class Clothes implements IProducts {
     ));
 
     public Clothes() {
-        System.out.println("\t\t\t< 의류 >");
+        System.out.println(ConsoleUI.BOLD + ConsoleUI.color256(213) + "\t\t\t< 의류 >" + ConsoleUI.RESET);
     }
 
     @Override

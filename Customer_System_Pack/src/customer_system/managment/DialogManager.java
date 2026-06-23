@@ -1,6 +1,6 @@
 package customer_system.managment;
 
-import customer_system.ConsoleColor;
+import customer_system.ConsoleUI;
 
 public class DialogManager {
     private static final DialogManager dialog = new DialogManager();
@@ -11,9 +11,10 @@ public class DialogManager {
 
     // 창 이름
     public String title(int a) {
-        if (a == 91) return ConsoleColor.CYAN + "\t\t## 주문 확인 ##" + ConsoleColor.RESET;
-        else if (a == 92) return ConsoleColor.YELLOW + "\t\t## 주문 취소 ##" + ConsoleColor.RESET;
-        else if (a > 0 && a < 4) return ConsoleColor.BLUE + "\t\t## 상품 목록 ##" + ConsoleColor.RESET;
+        if (a == 91) return ConsoleUI.BOLD + ConsoleUI.color256(48) + "\t\t## 금액 입금 ##" + ConsoleUI.RESET;
+        else if (a == 92) return ConsoleUI.BOLD + ConsoleUI.color256(51) + "\t\t## 주문 확인 ##" + ConsoleUI.RESET;
+        else if (a == 93) return ConsoleUI.BOLD + ConsoleUI.color256(208) + "\t\t## 주문 취소 ##" + ConsoleUI.RESET;
+        else if (a > 0 && a < 4) return ConsoleUI.BOLD + ConsoleUI.color256(39) + "\t\t## 상품 목록 ##" + ConsoleUI.RESET;
         else throw new IllegalArgumentException();
     }
 
@@ -47,8 +48,9 @@ public class DialogManager {
                 [0] 종료      | 프로그램 종료
                 
                 [ 주문 관리 ]
-                [91] 장바구니 확인    | 장바구니를 확인 후 주문합니다.
-                [92] 주문 취소       | 진행중인 주문을 취소합니다.
+                [91] 잔액 입금       | 결제에 사용할 금액을 입력합니다.
+                [92] 장바구니 확인    | 장바구니를 확인 후 주문합니다.
+                [93] 주문 취소       | 진행중인 주문을 취소합니다.
                 """);
     }
 

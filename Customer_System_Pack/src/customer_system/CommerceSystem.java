@@ -20,7 +20,7 @@ public class CommerceSystem {
 
     // 고객 등록
     public void register() {
-        System.out.println(ConsoleColor.BLUE + "\t\t## 회원 등록 ##" + ConsoleColor.RESET);
+        System.out.println(ConsoleUI.BOLD + ConsoleUI.color256(141) + "\t\t## 회원 등록 ##" + ConsoleUI.RESET);
         System.out.println("회원 이름을 입력하시오");
         String name = sc.nextLine();
         System.out.println("회원 이메일을 입력하시오");
@@ -42,14 +42,12 @@ public class CommerceSystem {
                 grade = Grade.values()[g - 1];
                 isVerified = true;
             } catch (InputMismatchException e) {
-                System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
-                sc.nextLine();
+                handleInputMismatch();
             } catch (IllegalArgumentException e) {
-                System.err.println("[ERROR 404] 유효하지 않은 회원 등급입니다.");
+                System.err.println(ConsoleUI.color256(196) + "[ERROR 404] 유효하지 않은 회원 등급입니다." + ConsoleUI.RESET);
             }
         }
         customer = new Customer(name, email, grade);
-        customer.getInfo();
         ListManager.getInstance().setCustomer(customer);
     }
 
@@ -59,7 +57,7 @@ public class CommerceSystem {
         // 상품을 선택하지 않은 경우
         while (!canAddCart) {
             customer.getInfo();
-            System.out.println(ConsoleColor.BLUE + "\t\t## 메인화면 ##" + ConsoleColor.RESET);
+            System.out.println(ConsoleUI.BOLD + ConsoleUI.color256(45) + "\t\t## 메인화면 ##" + ConsoleUI.RESET);
             DialogManager.getDialog().mainDialog();
             mainState();
             if (!isRunning) {
@@ -67,8 +65,9 @@ public class CommerceSystem {
                 return;
             }
 
-            if (a > 0 && a < 91) productListState();
-            else if (a == 91 || a == 92) orderState();
+            if (a > 0 && a < 90) productListState();
+            else if (a == 91) insertState();
+            else if (a == 92 || a == 93) orderState();
         }
 
         addCartState();
@@ -94,12 +93,11 @@ public class CommerceSystem {
                 isVerified = true;
 
             } catch (InputMismatchException e) {
-                System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
-                sc.nextLine();
+                handleInputMismatch();
             } catch (EmptyCartOrderException | NoCancelableOrderException ce) {
                 System.err.println(ce.getMessage());
             } catch (IllegalArgumentException e) {
-                System.err.println("[ERROR 404] 유효하지 않은 항목입니다.");
+                System.err.println(ConsoleUI.color256(196) + "[ERROR 404] 유효하지 않은 항목입니다." + ConsoleUI.RESET);
             }
         }
     }
@@ -116,10 +114,28 @@ public class CommerceSystem {
                 isVerified = true;
                 if (b != 0) canAddCart = true; // 상품 선택 완료시
             } catch (InputMismatchException e) {
-                System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
-                sc.nextLine();
+                handleInputMismatch();
             } catch (IndexOutOfBoundsException e) {
-                System.err.println("[ERROR 405] 존재하지 않는 상품 번호입니다.");
+                System.err.println(ConsoleUI.color256(196) + "[ERROR 405] 존재하지 않는 상품 번호입니다." + ConsoleUI.RESET);
+            }
+        }
+    }
+
+    // 입금 창으로 이동
+    private void insertState() throws InterruptedException {
+        boolean isVerified = false;
+        while (!isVerified) {
+            try {
+                long money = sc.nextLong();
+                if (money < 0 || money > 5000000) throw new InvalidDepositAmountException();
+                customer.setMoney(money);
+                System.out.printf(ConsoleUI.color256(48) + "[INFO 220] %,d원이 입금되었습니다.%n" + ConsoleUI.RESET, money);
+                Thread.sleep(800);
+                isVerified = true;
+            } catch (InputMismatchException e) {
+                handleInputMismatch();
+            } catch (InvalidDepositAmountException ce) {
+                System.err.println(ce.getMessage());
             }
         }
     }
@@ -130,15 +146,14 @@ public class CommerceSystem {
         while (!isVerified) {
             try {
                 int p = sc.nextInt();
-                if (a == 91) ListManager.getInstance().setOrder(p);
+                if (a == 92) ListManager.getInstance().setOrder(p);
                 else ListManager.getInstance().clearCart(p);
                 Thread.sleep(600);
                 isVerified = true;
             } catch (InputMismatchException e) {
-                System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
-                sc.nextLine();
+                handleInputMismatch();
             } catch (IllegalArgumentException e) {
-                System.err.println("[ERROR 404] 유효하지 않은 항목입니다.");
+                System.err.println(ConsoleUI.color256(196) + "[ERROR 404] 유효하지 않은 항목입니다." + ConsoleUI.RESET);
             }
         }
     }
@@ -153,18 +168,23 @@ public class CommerceSystem {
                 ListManager.getInstance().setCart(p); // 장바구니 업데이트
                 isVerified = true;
             } catch (InputMismatchException e) {
-                System.err.println("[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다.");
-                sc.nextLine();
+                handleInputMismatch();
             } catch (IllegalArgumentException e) {
-                System.err.println("[ERROR 404] 유효하지 않은 항목입니다.");
+                System.err.println(ConsoleUI.color256(196) + "[ERROR 404] 유효하지 않은 항목입니다." + ConsoleUI.RESET);
             }
         }
+    }
+
+    // 숫자가 아닌 입력 처리
+    private void handleInputMismatch() {
+        System.err.println(ConsoleUI.color256(196) + "[ERROR 400] 입력 형식 오류: 숫자만 입력할 수 있습니다." + ConsoleUI.RESET);
+        sc.nextLine();
     }
 
     // 프로그램 비활성화 플래그
     private void setRunState() {
         isRunning = false;
-        System.out.println(ConsoleColor.GREEN + "[INFO 200] 커머스 플랫폼을 정상 종료합니다." + ConsoleColor.RESET);
+        System.out.println(ConsoleUI.color256(46) + "[INFO 200] 커머스 플랫폼을 정상 종료합니다." + ConsoleUI.RESET);
     }
 
     // 프로그램 활성여부
@@ -172,4 +192,3 @@ public class CommerceSystem {
         return isRunning;
     }
 }
-

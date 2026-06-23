@@ -1,5 +1,6 @@
 package customer_system.productmanager.products;
 
+import customer_system.ConsoleUI;
 import customer_system.productmanager.*;
 import java.util.*;
 
@@ -13,7 +14,7 @@ public class Foods implements IProducts {
     ));
 
     public Foods() {
-        System.out.println("\t\t\t< 식품 >");
+        System.out.println(ConsoleUI.BOLD + ConsoleUI.color256(118) + "\t\t\t< 식품 >" + ConsoleUI.RESET);
     }
 
     @Override

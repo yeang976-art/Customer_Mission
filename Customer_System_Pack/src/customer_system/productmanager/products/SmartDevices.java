@@ -1,5 +1,6 @@
 package customer_system.productmanager.products;
 
+import customer_system.ConsoleUI;
 import customer_system.productmanager.*;
 import java.util.*;
 
@@ -13,7 +14,7 @@ public class SmartDevices implements IProducts {
     ));
 
     public SmartDevices() {
-        System.out.println("\t\t\t< 전자제품 >");
+        System.out.println(ConsoleUI.BOLD + ConsoleUI.color256(33) + "\t\t\t< 전자제품 >" + ConsoleUI.RESET);
     }
 
     @Override
