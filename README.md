@@ -1,5 +1,3 @@
-# Customer_Mission
-```markdown
 # Customer Mission - Console Commerce System
 
 Java 콘솔 환경에서 동작하는 실시간 커머스 플랫폼 학습 프로젝트입니다.
@@ -81,7 +79,7 @@ java -cp out/production/Customer_System_Pack customer_system.Main
 [91] 잔액 입금       | 결제에 사용할 금액을 입력합니다.
 [92] 장바구니 확인    | 장바구니를 확인 후 주문합니다.
 [93] 주문 취소       | 진행중인 주문을 취소합니다.
-```
+
 
 ---
 
@@ -371,4 +369,4 @@ Customer_System_Pack
 예를 들어 `isRunning = false`는 프로그램 종료 상태를 표시할 뿐, 이미 실행 중인 메서드 흐름을 자동으로 멈추지는 않습니다. 현재 메서드 흐름을 끊으려면 `return`이 필요합니다.
 
 이 경험을 통해 콘솔 프로그램에서도 상태 전이와 책임 분리가 중요하다는 것을 배웠습니다.
-```
+
